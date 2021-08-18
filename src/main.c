@@ -6,17 +6,20 @@ void main(void) {
   CLKREG = 0b1;
   DEMULT_CS1 = 0b1;
   char text[33];
-  char meta = 0b00000010;
-  strcpy(text, "I'm Open Source! LOL :P");
+  char meta[32] = {0,1,1,1,0,0,1,1,1,0,1,1,0,0,1,0,1,0,1,0,0,1,1,1,0,1,1,0,1,1,0,1};
+  strcpy(text, "I'm Open Source! LOL :P HAHAHAHA");
   pad_string(text);
   while(1){
+
+    draw_line(text, meta);
+    /*
     for(char i = 0; i < 2; i++) {
       if(i) {
         draw_line(text, 0b00000000);
       } else {
         draw_line(text, 0b00000011);
       }
-    }
+      }*/
   }
 }
   /*for(char group = 0; group < 16; group++ ){

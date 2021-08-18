@@ -5,5 +5,5 @@
 #include "../utils.h"
 
 void pad_string(char * text);
-void draw_line(char * text, char meta);
+void draw_line(char * text, char * meta);
 #endif /* TEXT_H */
