@@ -7,48 +7,44 @@ void pad_string(char * text) {
 }
 
 void draw_line(char * text, char * meta) {
-  //For each column in the first segment of all even sections, set row data and illuminate column with desired color.
-  delay_ms(10);
-  BDC_ADDR = 0b11111111;
-  clear_screen();
-  for (char segment = 0; segment < 2; segment++) {
-    for (char column = 0; column < 5; column++) {
-      for (char group = 0; group < 16; group+=2) {
-        XBYTE[group << 8] = 0b0000000; //Clear demux data
-        clock_demultiplexer(); //L -> H transition on selected demux output pin.
-
-        //Set desired column data for correct column; address selects correct flip-flop which latches to data assigned.
-        XBYTE[group << 8] = FONT[((text[(group*2) + segment] - 32) * 5) + column];
-
-        clock_demultiplexer(); //L -> H
-
+  delay_ms(10); //if we don't sleep here the last column of the previous operation will be dim.
+             //BDC0BDC1
+  BDC_ADDR = 0b11111111;                                                                              //disable both BDCs to clear them
+  clear_screen();                                                                                     //reset all the DFFs to prevent bleed
+  for (char segment = 0; segment < 2; segment++) {                                                    //each group is comprised of two segments
+    for (char column = 0; column < 5; column++) {                                                     //each segment is comprised of 5 columns
+      for (char group = 0; group < 16; group+=2) {                                                    //do the even groups
+        //Select the DFF we intend to address   //then advertise the row data for the corresponding column of the font
+        XBYTE[group << 8]                     = FONT[((text[(group*2) + segment] - 32) * 5) + column];
+        clock_demultiplexer(); //L -> H (rising edge) transition on selected pin latching data from the DFF address bus.
+        //Look up the correct color for the column we want, then enable that column
         BDC_ADDR = get_column(group, segment, 0, column);
-        //delay_ms(100);
       }
+      XBYTE[group << 8] = 0b0000000;                                                                  //Advertise clear rows on DFF address lines.
+      clock_demultiplexer(); //L -> H (rising edge) transition on selected DFF pin latching data from the DFF address bus.
     }
   }
-  delay_ms(10);
-  BDC_ADDR = 0b11111111;
-  clear_screen();
-  for (char segment = 0; segment < 2; segment++) {
-    for (char column = 0; column < 5; column++) {
-      for (char group = 1; group < 16; group+=2) {
-        XBYTE[group << 8] = 0b0000000;
-        clock_demultiplexer(); //L -> H
+  delay_ms(10); //if we don't sleep here the last column of the previous operation will be dim.
+  BDC_ADDR = 0b11111111;                                                                              //disable both BDCs to clear them
+  clear_screen();                                                                                     //reset all the DFFs to prevent bleed
+  for (char segment = 0; segment < 2; segment++) {                                                    //each group is comprised of two segments
+    for (char column = 0; column < 5; column++) {                                                     //each segment is comprised of 5 columns
+      for (char group = 1; group < 16; group+=2) {                                                    //do the odd groups
+        //Select the DFF we intend to address   //then advertise the row data for the corresponding column of the font
+        XBYTE[group << 8]                     = FONT[((text[(group*2) + segment] - 32) * 5) + column];
+        clock_demultiplexer(); //L -> H (rising edge) transition on selected DFF pin latching data from the DFF address bus.
 
-        //Set desired column data for correct column; address selects correct flip-flop which latches to data assigned.
-        XBYTE[group << 8] = FONT[((text[(group*2) + segment] - 32) * 5) + column];
-
-        clock_demultiplexer(); //L -> H
-
-        //Technically BCD bus data, set data bits to illuminate desired column based on map
+        //Look up the correct color for the column we want, then enable that column
         BDC_ADDR = get_column(group, segment, 1, column);
-        //delay_ms(100);
       }
-      //delay_ms(500); //Delay before moving back to even
     }
+    BDC_ADDR = 0b11111111;
+    XBYTE[group << 8] = 0b0000000;                                                                    //Advertise clear rows on DFF address lines.
+    clock_demultiplexer(); //L -> H (rising edge) transition on selected DFF latching pin.
   }
 }
+
+/* BEGIN OLD ALGORITHM */
 
 /*void draw_line(char * text, char meta) {
   clear_screen();
@@ -102,3 +98,5 @@ void draw_line(char * text, char * meta) {
     }
   }
   }*/
+
+/* END OLD ALGORITHM */
