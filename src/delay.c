@@ -46,3 +46,13 @@ void delay_100ns(unsigned int time)
       TR0=0;
     }
 }
+
+void delay_nop(unsigned int num_nops) {
+  num_nops = num_nops/4;
+  while(num_nops > 0) {
+    __asm__(
+            "NOP\n"
+            );
+    num_nops--;
+  }
+}
