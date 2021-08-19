@@ -10,17 +10,6 @@ void main(void) {
   strcpy(text, "I'm Open Source! LOL :P HAHAHAHA");
   pad_string(text); //make sure the string fills the screen
   while(1){
-
     draw_line(text, meta);
-
-    /* BEGIN TESTING CODE FOR OLD ALGORITHM */
-    /*for(char i = 0; i < 2; i++) {
-      if(i) {
-        draw_line(text, 0b00000000);
-      } else {
-        draw_line(text, 0b00000011);
-      }
-      }*/
-    /* END TESTING CODE FOR OLD ALGORITHM */
   }
 }
