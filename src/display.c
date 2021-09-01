@@ -10,7 +10,7 @@ void draw_group(char group_start, char * cols, char * cols_meta) {
   for (char color = 0; color < 2; color++) {                                                            //scan per color
     for (char segment = 0; segment < 2; segment++) {                                                    //each group is comprised of two segments
       for (char column = 0; column < 5; column++) {                                                     //each segment is comprised of 5 columns
-        for (char group = group_start; group < 16; group+=2) { //clock the row data into the even groups
+        for (char group = group_start; group < 16; group+=2) { //clock the row data into the groups
           char col_meta = cols_meta[(((group * 2) + segment) * 5) + column];
           char col_data = cols[(((group * 2) + segment) * 5) + column];
           char col_color = col_meta & 0b0000011;                                       //lookup the correct metadata for the segment
@@ -18,7 +18,7 @@ void draw_group(char group_start, char * cols, char * cols_meta) {
             if((col_meta >> 2) & 0b00000001){
               XBYTE[group << 8]                     = ~col_data;
             } else {
-              //Select the DFF we intend to address   //then advertise the row data for the corresponding column of the font
+              //Select the DFF we intend to address   //then advertise the row data for the corresponding column
               XBYTE[group << 8]                     = col_data;
             }
           } else {
@@ -26,7 +26,7 @@ void draw_group(char group_start, char * cols, char * cols_meta) {
           }
           clock_demultiplexer(); //L -> H (rising edge) transition on selected pin latching data from the DFF address bus
         }
-        for (char group = group_start; group < 16; group+=2) {                                                    //iluminate the even groups
+        for (char group = group_start; group < 16; group+=2) {                                                    //iluminate the groups
           //Look up the correct color for the column we want, then enable that column
           BDC_ADDR = get_column(group, segment, color, column);
           //delay_ms(500); //<<<<USE THIS DELAY FOR TESTING
