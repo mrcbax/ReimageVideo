@@ -7,6 +7,7 @@ void pad_string(char * text) {
 }
 
 void draw_line(char * text, char * meta) {
+  clear_screen();
   for (char color = 0; color < 2; color++) {                                                            //scan per color
     for (char segment = 0; segment < 2; segment++) {                                                    //each group is comprised of two segments
       for (char column = 0; column < 5; column++) {                                                     //each segment is comprised of 5 columns
@@ -29,6 +30,7 @@ void draw_line(char * text, char * meta) {
       }
     }
   }
+  clear_screen();
   for (char color = 0; color < 2; color++) {                                                            //scan per color
     for (char segment = 0; segment < 2; segment++) {                                                    //each group is comprised of two segments
       for (char column = 0; column < 5; column++) {                                                     //each segment is comprised of 5 columns
