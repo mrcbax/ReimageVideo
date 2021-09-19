@@ -8,7 +8,6 @@ void pad_string(char * text) {
 
 void empty_string(char * text) {
   for (char i = 0; i<strlen(text); i++) {
-    text[i] = ' ';
+    text[i] = '\0';
   }
-  text[0] = '\0';
 }

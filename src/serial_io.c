@@ -4,6 +4,7 @@
 
 static unsigned char rcnt;
 char * serial_buf;
+char data_received = 0;
 
 void serial_init() {
   rcnt = 0;
@@ -26,6 +27,7 @@ void serial_handler(void) __interrupt 4 {
     if (SBUF == '\n' || rcnt >= SERIAL_BUF_SIZE - 2) {
       serial_buf[SERIAL_BUF_SIZE - 1] = '\0';
       rcnt = 0;
+      data_received = 1;
     } else {
       serial_buf[rcnt] = SBUF;
       rcnt++;
@@ -38,8 +40,13 @@ void set_output_buf(char * buf) {
 }
 
 void clear_output_buf() {
-  for (char i = 0; i<strlen(serial_buf); i++) {
+  for (char i = 0; i<SERIAL_BUF_SIZE; i++) {
     serial_buf[i] = ' ';
   }
   serial_buf[0] = '\0';
+  data_received = 0;
+}
+
+char serial_data_received(){
+  return data_received;
 }
