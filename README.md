@@ -21,6 +21,8 @@ You will need an intel 8051 compatible MCU in the PLCC44 package style. This pro
 
 Communication with the device is done over RS232 serial at 14400 baud.
 
+Due to the design of the device, the 8051 chip can only receive data and cannot transmit. Instead, error messages are printed directly to the screen.
+
 Use `p` for percentage fill, `t` for text, and `c` for clear.
 
 color values are `r` for red, `g` for green, and `y` for yellow.
