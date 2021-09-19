@@ -2,6 +2,7 @@
 #define UTILS_H
 #include <at89s8253.h>
 #include <lint.h>
+#include <stdlib.h>
 #include <sdcc-lib.h>
 #include <compiler.h>
 #include <string.h>
