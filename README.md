@@ -10,10 +10,9 @@ You will need an intel 8051 compatible MCU in the PLCC44 package style. This pro
 ## Goals
 
 - [x] Display text
-- [ ] Display bars
-- [x] Per-segment color
+- [x] Display bars
+- [x] Color
 - [x] Segment inversion
-- [ ] Per-column color
-- [ ] Per-column inversion
-- [ ] Serial communication
-- [ ] Serial command processing
+- [x] Per-column inversion
+- [x] Serial communication
+- [x] Serial command processing
