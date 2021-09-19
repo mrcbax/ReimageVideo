@@ -5,3 +5,10 @@ void pad_string(char * text) {
     strcat(text, " ");
   }
 }
+
+void empty_string(char * text) {
+  for (char i = 0; i<strlen(text); i++) {
+    text[i] = ' ';
+  }
+  text[0] = '\0';
+}

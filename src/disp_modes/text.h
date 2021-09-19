@@ -6,4 +6,5 @@
 #include "../utils.h"
 
 void pad_string(char * text);
+void empty_string(char * text);
 #endif /* TEXT_H */
