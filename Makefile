@@ -12,6 +12,8 @@ clean:
 	rm -f $(BIN_DIR)/main.hex
 
 build: clean
+	mkdir -p $(BUILD_DIR)
+
 	pushd $(SRC_DIR); $(CC) $(CFLAGS)$(AARCH) -c delay.c; popd
 	pushd $(SRC_DIR); $(CC) $(CFLAGS)$(AARCH) -c utils.c; popd
 	pushd $(SRC_DIR); $(CC) $(CFLAGS)$(AARCH) -c column.c; popd
